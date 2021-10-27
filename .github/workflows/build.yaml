@@ -9,9 +9,9 @@ jobs:
   build_and_push:
 
     runs-on: ubuntu-latest
-    container: ubuntu_with_extras
+    #container: ubuntu_with_extras
     env:
-      REGISTRY: docker.pkg.github.com
+      #REGISTRY: docker.pkg.github.com
       IMAGE_ID: docker.pkg.github.com/${{ github.repository }}/application:latest
     steps:
       #- uses: actions/checkout@v2
