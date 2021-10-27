@@ -1,0 +1,27 @@
+name: build
+
+on:
+  push:
+    branches: main
+
+jobs:
+
+  build_and_push:
+
+    runs-on: ubuntu-latest
+    container: ubuntu_with_extras
+    env:
+      REGISTRY: docker.pkg.github.com
+      IMAGE_ID: docker.pkg.github.com/${{ github.repository }}/application:latest
+    steps:
+      #- uses: actions/checkout@v2
+
+      # scan the python code with bandit sast
+      - name: run bandit sast
+        uses: tj-actions/bandit@v5
+        with:
+          targets: .
+          options: "-r"
+
+      
+      
