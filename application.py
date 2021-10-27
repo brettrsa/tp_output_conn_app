@@ -24,9 +24,9 @@ def convert_linux_netaddr(address):
 
     return "{}:{}".format(addr, port)
 
-def print_data(timestamp, raddr_rport, laddr_lport):
+def print_data(timestamp, raddr_sport, host_addr_dport):
 
-    print("{}: New Connection: {} -> {}".format(timestamp, raddr_rport, laddr_lport))
+    print("{}: New Connection: {} -> {}".format(timestamp, raddr_sport, host_addr_dport))
 
 def main():
     
@@ -47,21 +47,21 @@ def main():
         timestamp = time_now.strftime("%Y-%m-%d %H:%M:%S")
         
         for s in sockets:            
-            laddr_lport = convert_linux_netaddr(s.split()[1])
-            raddr_rport = convert_linux_netaddr(s.split()[2])
+            host_addr_dport = convert_linux_netaddr(s.split()[1])
+            raddr_sport = convert_linux_netaddr(s.split()[2])
             connection_state = s.split()[3]            
 
             # an established connection is 01
             if connection_state == '01':
                 if n == 0:
-                    print_data(timestamp, raddr_rport, laddr_lport)
-                    current.append(raddr_rport + ' ' + laddr_lport)
+                    print_data(timestamp, raddr_sport, host_addr_dport)
+                    current.append(raddr_sport + ' ' + host_addr_dport)
                 else:
-                    inbound.append(raddr_rport + ' ' + laddr_lport)
+                    inbound.append(raddr_sport + ' ' + host_addr_dport)
                     new_connection_list =  [x for x in inbound if x not in set(current)]
                     if len(new_connection_list):
                         for entry in new_connection_list:
-                            print_data(timestamp, raddr_rport, laddr_lport)
+                            print_data(timestamp, raddr_sport, host_addr_dport)
                             current.append(entry.split(' ')[0] + ' ' + entry.split(' ')[1])
                             inbound.clear()
         
