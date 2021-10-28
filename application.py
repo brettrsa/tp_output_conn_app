@@ -118,9 +118,9 @@ def main():
                         if i in k:
                             print(i, v.get('dport'))
             
-        # clear the list and reset the minute counter
-        r_addr_ip_list.clear()
-        minute_counter = 0
+             # clear the list and reset the minute counter
+            r_addr_ip_list.clear()
+            minute_counter = 0
 
         
         # increment counter            
