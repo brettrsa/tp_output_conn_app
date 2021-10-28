@@ -4,7 +4,7 @@ I would say that it's useful as it's agentless so there is no dependency on havi
 
 # What is the hardest technical problem or outage you've had to solve in your career? Explain what made it so difficult?
 I'd have to say working on what was supposed to be a simple terraform migration.
-The issue was the change in the terraform state data sctructure from 0.11.x to 0.12.x
+The issue was the change in the terraform state data structure from 0.11.x to 0.12.x
 
 There was an operations system that was used for support on k8s clusters and cloud infrastructure platforms, all the libraries that were used in this platform expected the data in a specific format, after the upgrade this ceased to function correctly due to the change in the data structure.
 
