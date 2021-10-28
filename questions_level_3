@@ -1,3 +1,13 @@
 # If you had to deploy this program to hundreds of servers, what would be your preferred method? Why?
+I would say either ansible or salt, i would tend towards ansible because i'm more familiar with it.
+I would say that it's useful as it's agentless so there is no dependency on having to have an agent installed on the remote end.
 
 # What is the hardest technical problem or outage you've had to solve in your career? Explain what made it so difficult?
+I'd have to say working on what was supposed to be a simple terraform migration.
+The issue was the change in the terraform state data sctructure from 0.11.x to 0.12.x
+
+There was an operations system that was used for support on k8s clusters and cloud infrastructure platforms, all the libraries that were used in this platform expected the data in a specific format, after the upgrade this ceased to function correctly due to the change in the data structure.
+
+This resulted in spending a number of months refactoring the libraries with very little documentation or team knowledge of how the libraries and system functioned.
+
+Very challenging to say the least, but, i did get to read and write a fair amount of code which was great!
