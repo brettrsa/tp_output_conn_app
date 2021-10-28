@@ -8,6 +8,8 @@
 
 from datetime import datetime
 import time
+from prometheus_client import Counter
+from prometheus_client import start_http_server
 
 def split_every_n(data, n):
     return [data[i:i+n] for i in range(0, len(data), n)]
@@ -42,6 +44,8 @@ def main():
     minute_counter = 0
     # this counter is used to determine whether /proc/net/tcp has been read previously
     n = 0
+    # 
+    c = Counter('number_of_new_connections', 'New Connections')
     
     while True:
 
@@ -55,6 +59,7 @@ def main():
         time_now = datetime.now()
         timestamp = time_now.strftime("%Y-%m-%d %H:%M:%S")
         
+        # loop through socket data and format fields
         for s in sockets:            
             host_addr_dport = convert_linux_netaddr(s.split()[1])
             raddr_sport = convert_linux_netaddr(s.split()[2])
@@ -68,7 +73,8 @@ def main():
                 if n == 0:
                     print_data(timestamp, raddr_sport, host_addr_dport)
                     current.append(raddr_sport + ' ' + host_addr_dport)
-                    
+                    # increment prometheus new connection counter
+                    c.inc() 
                     # dict that stores data to be checked for port scanning activity 
                     connection_data[raddr_sport] = {}
                     connection_data[raddr_sport]['timestamp'] =  timestamp
@@ -76,12 +82,14 @@ def main():
                 else:
                     # add remote address, source port, host address and destination port to list
                     inbound.append(raddr_sport + ' ' + host_addr_dport)
-                    #
+                    # if an inbound connection is not in current list, then the connection is a new connection
                     new_connection_list =  [x for x in inbound if x not in set(current)]
-                    #
+                    # if new_connection contains data
                     if len(new_connection_list):
                         for entry in new_connection_list:
                             print_data(timestamp, raddr_sport, host_addr_dport)
+                            # increment prometheus new connection counter
+                            c.inc()
                             current.append(entry.split(' ')[0] + ' ' + entry.split(' ')[1])            
                             # dict that stores data to be checked for ports scanning activity 
                             connection_data[raddr_sport] = {}
@@ -89,24 +97,31 @@ def main():
                             connection_data[raddr_sport]['dport'] =  host_dport               
                             # clear inbound list
                             inbound.clear()
-                            
-        r_addr_ip_list = []
+
+        # this is used to check for port scans
+        # the data is output, but not in the correct format
+        # ran out of time trying to figure this out :(                            
+        r_addr_ip_list = []        
         # check if the minute counter is equal to 6
-        if minute_counter == 4:
+        if minute_counter == 6:
+            # get key/values from nested dictionary
             for k, v in connection_data.items():
+                # format r_addr variable
                 r_addr = k.split(':')[0]
+                # add r_addr as an element to the list
                 r_addr_ip_list.append(r_addr)
-            
+            # loop through the list and determine if an ip address occurence is > than 3
             for i in r_addr_ip_list:
-                if r_addr_ip_list.count(i) > 2:
+                if r_addr_ip_list.count(i) > 3:
+                    print('Portscan!!!!!')
                     for k, v in connection_data.items():
                         if i in k:
                             print(i, v.get('dport'))
             
+            # clear the list and reset the minute counter
             r_addr_ip_list.clear()
             minute_counter = 0
 
-        # increment minute check counter 
         
         # increment counter            
         n += 1
@@ -114,5 +129,10 @@ def main():
         time.sleep(5)
 
 if __name__ == '__main__':
+    
+    # start up the server to expose the metrics.
+    start_http_server(8000)
+
+    # call main()
     main()
 
