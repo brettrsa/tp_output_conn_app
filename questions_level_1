@@ -1,16 +1,16 @@
-- How would you prove the code is correct?
+# How would you prove the code is correct?
 Ideally, by writing some sort of unittest/test within the code.
 In this instance, i'm a little pressed for time, so i've ended up using netcat to generate connection
 attempts and have added print statements into the code to confirm that the connection is registered.
 
-- How would you make this solution better?
+# How would you make this solution better?
 I would clean up the code, probably add more functions, add some unit tests/testing.
 I'd like to research a way of possible streaming the connections from /proc/net/tcp instead of checking at intervals, ie, generate an event when there is a change of state, new connection etc
 
-- Is it possible for this program to miss a connection?
+# Is it possible for this program to miss a connection?
 Yes, if the connection attempt is shortlived it would be missed. 
 The connection would also be missed if udp, tcp6 and udp6 were used. 
 
-- If you weren't following these requirements, how would you solve the problem of logging every new connection?
+# If you weren't following these requirements, how would you solve the problem of logging every new connection?
 
 Possibly with an existing mechanism such as iptables and then logging to file, although i would like to look into how the connections could generate an event instead of having to poll a file at intervals.
