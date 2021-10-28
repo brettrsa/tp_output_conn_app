@@ -44,7 +44,7 @@ def main():
     minute_counter = 0
     # this counter is used to determine whether /proc/net/tcp has been read previously
     n = 0
-    # 
+    # prometheus counter for number of new connections metric
     c = Counter('number_of_new_connections', 'New Connections')
     
     while True:
