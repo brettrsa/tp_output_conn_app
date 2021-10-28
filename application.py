@@ -125,8 +125,8 @@ def main():
         
         # increment counter            
         n += 1
-        # sleep 5 seconds
-        time.sleep(5)
+        # sleep 10 seconds
+        time.sleep(10)
 
 if __name__ == '__main__':
     

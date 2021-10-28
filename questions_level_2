@@ -1,5 +1,12 @@
 # Why did you choose x to write the build automation?
+I used github actions locally using a project called act, https://github.com/nektos/act
+I'd used this previously and found it fairly simple to and easy to add items like scanning container images, linter dockerfiles, code etc
 
 # Is there anything else you would test if you had more time?
+Everything ! I would spend more time learning how to actually write decent tests, this is something i need to work on as i didn't implement any testing.
 
 # What is the most important tool, script, or technique you have for solving problems in production? Explain why this tool/script/technique is the most important.
+Tooling i would say it has to be between tcpdump, netcat and socat, all very useful tools.
+I'm tempted to say netcat as it really seems to act like a swiss army knife, generating traffic, creating listening ports.
+
+On the technique aspect, i would say that, i try to start troubleshooting issues moving from understanding the problem simply and then moving towards complexity.
