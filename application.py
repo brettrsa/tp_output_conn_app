@@ -1,7 +1,7 @@
 #!/usr/bin/python env
 #
 # read the contents of /proc/net/tcp every 10 seconds and output new connections
-# new connections are connections that have the state of established, 01 in hex
+# new connections are connections that have the state of established, 01 in /proc/net/tcp
 #
 # start
 #
@@ -33,8 +33,12 @@ def main():
     # lists to store current and inbound connections
     current = []
     inbound = []
+    # list that stores data to be checked for ports canning activity 
+    connection_data = []
     
-    # counter
+    # this counter is used to check whether a minute has passed - used to trigger the portscan check
+    minute_counter = 0
+    # this counter is used to determine whether /proc/net/tcp has been read previously
     n = 0
     
     while True:
@@ -56,6 +60,9 @@ def main():
                 if n == 0:
                     print_data(timestamp, raddr_sport, host_addr_dport)
                     current.append(raddr_sport + ' ' + host_addr_dport)
+                    raddr = raddr_sport.split(':')[0]
+                    host_dport = host_addr_dport.split(':')[1]
+                    print(timestamp, raddr, host_dport)
                 else:
                     inbound.append(raddr_sport + ' ' + host_addr_dport)
                     new_connection_list =  [x for x in inbound if x not in set(current)]
@@ -65,7 +72,9 @@ def main():
                             current.append(entry.split(' ')[0] + ' ' + entry.split(' ')[1])
                             inbound.clear()
         
-        # increment counter             
+        # increment minute check counter 
+        minute_counter += 10
+        # increment counter            
         n += 1
         # sleep 5 seconds
         time.sleep(5)
