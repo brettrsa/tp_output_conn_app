@@ -1,0 +1,23 @@
+# Level 1
+Implementation is complete
+
+# Level 2
+1) Add a Makefile or your preferred build scripting to build and test the solution
+   Used github actions with a local runner, this is called act, the project can be found here
+   https://github.com/nektos/act
+
+2) Add some tests, test for corner cases or unexpected behaviour
+   Didn't get to this - would be great for production
+
+3) Add the ability to detect a port scan, where a single source IP connects to more than 3 host ports in the previous minute
+   Rougly implemented this, will need more work
+
+# Level 3
+1) Add a prometheus endpoint to report metrics 
+   Completed
+
+2) Build the project into a docker container, provide instructions on how to execute as a container while reporting connections on the host.
+   Completed
+
+3) When a port scan is detected, configure the host firewall to block connections by source-ip.
+   Didn't get to this

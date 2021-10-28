@@ -2,11 +2,11 @@
 HOW-TO-INSTALL AND RUN #
 ########################
 
-- git pull <source of repo>
+# Build the container from the Dockerfile
+docker build -t local_app/local_app .
 
-- setup a virtual environment, as per below, 
-   python3 -m venv /path/to/repo
-   source /path/to/repo/bin/activate
+# Run the docker with the commands below, 
+docker run -d --net=host local_app/local_app
 
-- run script as per below, 
-   python find_new_connections.py
+
+
