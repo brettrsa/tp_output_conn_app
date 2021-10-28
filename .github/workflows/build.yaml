@@ -9,7 +9,7 @@ jobs:
   build_and_push:
 
     runs-on: ubuntu-latest
-    #container: ubuntu_with_extras
+    container: ubuntu_with_extras
     env:
       REGISTRY: docker.pkg.github.com
       IMAGE_ID: docker.pkg.github.com/${{ github.repository }}/application:latest
@@ -17,11 +17,11 @@ jobs:
       #- uses: actions/checkout@v2
 
       # scan the python code with bandit sast
-      - name: run bandit sast
-        uses: tj-actions/bandit@v5
-        with:
-          targets: .
-          options: "-r"
+      #- name: run bandit sast
+      #  uses: tj-actions/bandit@v5
+      #  with:
+      #    targets: .
+      #    options: "-r"
       
       # check the dockerfile with hadolint for security/misconfiguration issues
       - name: check the dockerfile with hadolint
