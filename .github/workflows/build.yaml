@@ -10,18 +10,13 @@ jobs:
 
     runs-on: ubuntu-latest
     container: ubuntu_with_extras
-    env:
-      REGISTRY: docker.pkg.github.com
-      IMAGE_ID: docker.pkg.github.com/${{ github.repository }}/application:latest
+    
     steps:
-      #- uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       # scan the python code with bandit sast
-      #- name: run bandit sast
-      #  uses: tj-actions/bandit@v5
-      #  with:
-      #    targets: .
-      #    options: "-r"
+      - name: run bandit sast
+        run: docker run --rm -i opensorcery/bandit -r .
       
       # check the dockerfile with hadolint for security/misconfiguration issues
       - name: check the dockerfile with hadolint
@@ -29,13 +24,13 @@ jobs:
 
       # build the image
       - name: build image
-        run: docker build -t ${{ env.IMAGE_ID }} .
+        run: docker build -t local_app .
 
       # scan image with trivy
       - name: run trivy container vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.IMAGE_ID }}
+          image-ref: local_app
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true

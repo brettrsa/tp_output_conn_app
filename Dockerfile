@@ -11,9 +11,6 @@ RUN adduser -D app_user && chown -R app_user /srv/app
 # set workdir
 WORKDIR /srv/app/
 
-# set port to tcp 8000
-#EXPOSE 8000
-
 # set user,use entrypoint and cmd
 USER app_user
 ENTRYPOINT ["python3"] 
