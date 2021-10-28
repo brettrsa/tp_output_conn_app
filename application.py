@@ -103,7 +103,7 @@ def main():
         # ran out of time trying to figure this out :(                            
         r_addr_ip_list = []        
         # check if the minute counter is equal to 6
-        if minute_counter == 6:
+        if minute_counter == 2:
             # get key/values from nested dictionary
             for k, v in connection_data.items():
                 # format r_addr variable
