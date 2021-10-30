@@ -5,7 +5,9 @@ attempts and have added print statements into the code to confirm that the conne
 
 # How would you make this solution better?
 I would clean up the code, probably add more functions, add some unit tests/testing.
-I'd like to research a way of possible streaming the connections from /proc/net/tcp instead of checking at intervals, ie, generate an event when there is a change of state, new connection etc
+I'd like to research a way of possibly streaming the connections from /proc/net/tcp instead of checking at intervals, ie, generate an event when there is a change of state, new connection etc.
+I'd also capture connections with different states and not only established, ie establish, initial syn sent etc.
+
 
 # Is it possible for this program to miss a connection?
 Yes, if the connection attempt is shortlived it would be missed. 
